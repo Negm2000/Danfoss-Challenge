@@ -2,7 +2,8 @@ namespace Danfoss;
 
 public record LogEntry()
 {
-    String timestamp;
-    String message;
-    String errorCode;
+    public String? timestamp{get;set;}
+    public String? logLevel { get; set; } = "INFO";
+    
+    public String? message{get;set;}
 }

@@ -1,9 +1,41 @@
-﻿using Danfoss;
+﻿using System.Text.Encodings.Web;
+using Danfoss;
+using System.Text.Json;
 
-var testString =
-    "2023-11-01T08:03:15Z [CRITICAL] - Unhandled exception during payment processing for order 789123.\n  Traceback (most recent call last):\n    File \"/app/services/payment_processor.py\", line 45, in process\n      external_api.charge(amount, card_token)\n    File \"/app/lib/external_api.py\", line 112, in charge\n      raise APITimeoutError(\"API did not respond in 30s\")";
+var options = new JsonSerializerOptions
+{
+    WriteIndented = true,
+    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+};
 
-var logEntry = new LogEntry();
-Console.WriteLine(LogParser.GetTimestamp(testString));
-Console.WriteLine(LogParser.GetErrorCode(testString));
-Console.WriteLine(LogParser.GetMessage(testString, true));
+string logPath = "C:\\Users\\Karim Negm\\Documents\\Danfoss\\Danfoss\\Danfoss\\app.log";
+StreamReader sr = new StreamReader(logPath);
+string? line = sr.ReadLine();
+string? nextLine  = sr.ReadLine();
+while (line is not null)
+{
+    var timestamp = LogParser.GetTimestamp(line);
+    if (timestamp is not null)
+    {
+        LogEntry entry = new LogEntry();
+        entry.timestamp = timestamp;
+        entry.logLevel = LogParser.GetLogLevel(line);
+        entry.message = LogParser.GetMessage(line);
+        if (entry.logLevel is "ERROR" or "CRITICAL")
+        {
+            while (LogParser.GetTimestamp(nextLine) is null)
+            {
+                entry.message +=  nextLine;
+                nextLine = sr.ReadLine();
+            }
+        }
+        string finalJson = JsonSerializer.Serialize(entry, options);
+        if (nextLine is not null) finalJson += ',';
+        Console.WriteLine(finalJson);
+    }
+    line = nextLine;
+    nextLine = sr.ReadLine();
+}
+
+
+

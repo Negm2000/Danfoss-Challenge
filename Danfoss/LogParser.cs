@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace Danfoss;
 using System.Text.RegularExpressions;
 
@@ -12,7 +10,7 @@ public static class LogParser
         return null; // No timestamp found in this format
     }
 
-    public static String? GetErrorCode(String entry)
+    public static String? GetLogLevel(String entry)
     {
         Regex errorRegex = new Regex(@"\[(\S+)\]");
         // Groups[0] is [ERROR] - Groups[1] is ERROR without the square brackets
@@ -24,13 +22,13 @@ public static class LogParser
     public static String? GetMessage(String entry, bool multiline = false)
     {
         Regex messageRegex = new Regex(@" - (.*)");
-        // Groups[1] is the First Parenthesis
         var match = messageRegex.Match(entry).Groups[1];
         if (!multiline)
         {
             if (match.Success) return match.Value;
             return null; // No message
         }
+        // Remove the header and concatenate the rest of the message
         int nextLineIdx = entry.IndexOf('\n');
         return  match.Value + entry.Substring(nextLineIdx);
     }
