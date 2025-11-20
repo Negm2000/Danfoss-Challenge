@@ -1,16 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using Danfoss;
 
-namespace Danfoss
-{
-	class LogSerializer
-	{
-		public static void Main(string[] args)
-		{
-			String pattern = (@"\d{4}-\d{2}-\d{2}");
-			
-			Console.WriteLine("Hello World!");
-		}
-	}
-};
-
+var test = LogParser.getTimestamp("2023-11-01T08:00:15Z [INFO] - Application starting");
+Console.WriteLine(test);
