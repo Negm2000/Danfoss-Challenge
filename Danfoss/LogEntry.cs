@@ -2,7 +2,7 @@ namespace Danfoss;
 
 public record LogEntry()
 {
-    String? timestamp;
-    String? message;
-    String? errorCode;
+    String timestamp;
+    String message;
+    String errorCode;
 }
