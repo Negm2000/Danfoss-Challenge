@@ -1,0 +1,38 @@
+2023-11-01T08:00:15Z [INFO] - Application starting up. Version 1.2.3.
+2023-11-01T08:00:16Z [DEBUG] - Configuration loaded from /etc/app/config.yml.
+2023-11-01T08:00:17Z [INFO] - Database connection pool initialized with 10 connections.
+[ERROR] 2023-11-01T08:01:05Z - Failed to connect to database: Connection refused.
+2023-11-01T08:01:10Z - Health check endpoint called by monitoring service.
+2023-11-01T08:01:12Z [INFO] - User 'admin' successfully authenticated. SessionID: 5f4e3d2c1b0a.
+============================================================
+           SYSTEM MAINTENANCE WINDOW STARTING
+============================================================
+2023-11-01T08:02:00Z [WARNING] - Disk space is low on /var/log. Usage: 92%.
+This is not a real log entry and is just noise that should be ignored.
+2023-11-01T08:03:15Z [CRITICAL] - Unhandled exception during payment processing for order 789123.
+  Traceback (most recent call last):
+    File "/app/services/payment_processor.py", line 45, in process
+      external_api.charge(amount, card_token)
+    File "/app/lib/external_api.py", line 112, in charge
+      raise APITimeoutError("API did not respond in 30s")
+2023-11-01T08:04:00Z [DEBUG] - API request completed. Details: {"method": "POST", "endpoint": "/api/v2/orders", "status": 201, "latency_ms": 152}
+# Manually triggered cache flush by admin.
+2023-11-01T08:05:00Z [NOTICE] - Cache flushed successfully. Items removed: 10523.
+2023-11-01T08:05:30Z [WARNING] -
+2023-11-01T08:05:45Z [INFO] - New user signed up: 'testuser123'.
+Invalid-Timestamp-Format [ERROR] - User session for 'jane_doe' expired due to inactivity.
+2023-11-01T08:06:00Z [INFO] - Starting background job: ProcessDailyReports.
+2023-11-01T08:06:15Z [DEBUG] - Job parameters: user_group=premium, region=us-east, force_rebuild=false
+2023-11-01T08:07:00Z [ERROR] - Missing required field 'user_id' in request payload from 192.168.1.100.
+2023-11-01T08:08:00Z [INFO] - Report generated and sent to reports@example.com. \nAttachment: report_2023-11-01.pdf
+2023-11-01T08:08:05Z [INFO] - Third-party API rate limit approaching. 4500 of 5000 requests used.
+2023-11-01T08:09:00Z [DEBUG] - SQL Query executed. Duration: 25.5ms, Query: "SELECT * FROM users WHERE last_login < '2023-10-01';"
+[INFO] 2023-11-01T08:09:30Z - User 'admin' logged out.
+2023-11-01T08:10:00Z [AUDIT] - Security policy 'password_complexity' for user 'testuser123' updated by 'admin'.
+2023-11-01T08:10:15Z [ERROR] - Failed to write to disk. Details:
+<error type="IOException">
+  <message>No space left on device</message>
+  <file>/data/cache/app.cache</file>
+</error>
+2023-11-01T08:11:00Z [WARNING] - A deprecated API endpoint '/api/v1/status' was accessed. It will be removed in Q4.
+2023-11-01T08:11:30Z [INFO] - Final log entry. Application shutting down.
