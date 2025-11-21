@@ -1,10 +1,12 @@
 namespace Danfoss;
+
 using System.Text.RegularExpressions;
 
 public static class LogParser
 {
     public static String? GetTimestamp(String entry)
     {
+        // Returns the first timestamp that has the form TEXT-TEXT-TEXT
         Regex timestampRegex = new Regex(@"\S+-\S+-\S+");
         if (timestampRegex.Match(entry).Success) return timestampRegex.Match(entry).Value;
         return null; // No timestamp found in this format
@@ -12,24 +14,20 @@ public static class LogParser
 
     public static String? GetLogLevel(String entry)
     {
+        // Captures anything in the form of [TEXT]
         Regex errorRegex = new Regex(@"\[(\S+)\]");
-        // Groups[0] is [ERROR] - Groups[1] is ERROR without the square brackets
+        // Groups[0] is [TEXT] - Groups[1] is TEXT without the square brackets
         var match = errorRegex.Match(entry).Groups[1];
         if (match.Success) return match.Value;
         return null; // No error code
     }
 
-    public static String? GetMessage(String entry, bool multiline = false)
+    public static String? GetMessage(String entry)
     {
+        // Captures all text after the first dash, until a new line begins.
+        // Multi-line logic handled in main code
         Regex messageRegex = new Regex(@" - (.*)");
         var match = messageRegex.Match(entry).Groups[1];
-        if (!multiline)
-        {
-            if (match.Success) return match.Value;
-            return null; // No message
-        }
-        // Remove the header and concatenate the rest of the message
-        int nextLineIdx = entry.IndexOf('\n');
-        return  match.Value + entry.Substring(nextLineIdx);
+        return match.Value;
     }
 }
