@@ -6,11 +6,12 @@ In chronological order I started by doing the following, taking notes during the
   - All valid log entries had a timestamp (or at least a malformed timestamp), entries without a timestamp could be safely ignored.
     - All timestamps had the form 'text-text-text'
   - Some entries were multi-line, how do we know when an entry ends?
-    - If we say an entry ends once the next entry begins, we risk including noise that should have been ignored.
-      - If we assume only CRITICAL and ERROR could be multi-line then we can process any kind of error message.
-        And we will avoid the noise in this specific file, but it runs the risk of including noise in the message.
-    - One alternative is to write a regex for each kind error. Safer but doesn't scale.
-2. I know **regex** is the right tool for this, so I researched how to use regex in C# and found a cheat sheet for all 
+    - If we say an entry ends once the next entry begins, and include everything in-between we risk including noise 
+      that should have been ignored.
+    - If we assume only `CRITICAL` and `ERROR` could be multi-line then we will avoid any noise in this specific file,
+      but this will fail if an `ERROR` is followed by noise.
+    - Safest option is to only select for specific types of error messages.
+2. I know **Regex** is the right tool for this, so I researched how to use regex in C# and found a cheat sheet for all 
       the regex commands which I kept as a reference.
 
 # Assumptions

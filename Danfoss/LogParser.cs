@@ -9,7 +9,7 @@ public static class LogParser
         // Returns the first timestamp that has the form TEXT-TEXT-TEXT
         Regex timestampRegex = new Regex(@"\S+-\S+-\S+");
         if (timestampRegex.Match(entry).Success) return timestampRegex.Match(entry).Value;
-        return null; // No timestamp found in this format
+        return null; // No timestamp 
     }
 
     public static String? GetLogLevel(String entry)
@@ -27,7 +27,9 @@ public static class LogParser
         // Captures all text after the first dash, until a new line begins.
         // Multi-line logic handled in main code
         Regex messageRegex = new Regex(@" - (.*)");
+        // Groups[1] is the message without the ' - '
         var match = messageRegex.Match(entry).Groups[1];
-        return match.Value;
+        if (match.Success) return match.Value;
+        return null;
     }
 }
