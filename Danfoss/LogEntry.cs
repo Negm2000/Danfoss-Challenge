@@ -9,7 +9,7 @@ namespace Danfoss;
 /// </remarks>
 public record LogEntry
 {
-    public String? timestamp { get; set; }
-    public String? logLevel { get; set; }
-    public String? message { get; set; }
+    public string? timestamp { get; set; }
+    public string? logLevel { get; set; }
+    public string? message { get; set; }
 }

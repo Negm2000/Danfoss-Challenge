@@ -15,7 +15,7 @@ Analyzing `app.log`, we can notice that the overall structure has the following 
          that should have been ignored, we would still need to find a way to avoid the noise.
        - If we do that but assume only `CRITICAL` and `ERROR` are multi-line then we will avoid any noise in this file,
          but this idea is too fragile and would fail if in another log file there's an `ERROR` that's followed by noise.
-       - One option is to only select for tracebacks and XML error messages (too fragile, hard to make reliable).
+       - One option is to only look for tracebacks and XML error messages (difficult to write a proper Regex for, will likely be buggy).
        - The safest option is to filter out the noise explicitly (easy, but requires the noise be known)
    - Some entries had missing info, for the sake of standardization, they will all be serialized as null.
      - This behavior can easily be changed using the `??` operator to assign default values.
