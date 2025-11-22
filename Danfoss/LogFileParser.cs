@@ -8,23 +8,25 @@ public static class LogFileParser
     public static void ParseFile(string logPath, Regex? noiseFilter = null, JsonSerializerOptions? options = null)
     {
         // Read the file line by line
-        StreamReader sr = new StreamReader(logPath);
+        var sr = new StreamReader(logPath);
         string? line = sr.ReadLine();
         // Read next line early to allow for peeking
         string? nextLine = sr.ReadLine();
         while (line is not null)
         {
-            // An entry starts when a timestamp is found, otherwise we ignore
-            var timestamp = LogParser.GetTimestamp(line);
-            if (timestamp is not null)
+            // An entry starts when a timestamp of any format is found, otherwise we ignore it.
+            if (LogParser.GetTimestamp(line) is not null)
             {
                 // Initialize entry to be serialized
-                LogEntry entry = new LogEntry
+                var entry = new LogEntry
                 {
-                    timestamp = LogParser.GetTimestamp(line, strict:true),
+                    // Strict mode will yield null if the timestamp isn't ISO8601 compliant
+                    // otherwise the invalid timestamp will be printed as is
+                    timestamp = LogParser.GetTimestamp(line, strict: true),
                     logLevel = LogParser.GetLogLevel(line),
                     message = LogParser.GetMessage(line)
                 };
+                
                 // Multi-line message ends only when we reach the next timestamp/EOF
                 while (nextLine != null && LogParser.GetTimestamp(nextLine) is null)
                 {
