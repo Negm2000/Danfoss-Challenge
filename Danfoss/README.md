@@ -20,3 +20,4 @@ In chronological order I started by doing the following, taking notes during the
 2. Multi-line messages only end when a new timestamp begins.
 3. Any missing logLevel or message will be serialized as null.
 4. All noise patterns are known and no real messages will share the same patterns.
+5. Partially malformed entries should be serialized, this can easily be adjusted however by changing the regex to be more selective.
