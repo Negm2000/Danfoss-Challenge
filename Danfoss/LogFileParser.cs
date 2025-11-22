@@ -46,7 +46,7 @@ public static class LogFileParser
                     // No filter, append everything until the next timestamp
                     if (noiseFilter == null)
                         entry.message += $"\n{nextLine}";
-                    // Append line to message only if it's not noise
+                    // Apply filter, append line to message only if it's not noise
                     else if (!noiseFilter.IsMatch(nextLine)) 
                         entry.message += $"\n{nextLine}";
                     nextLine = sr.ReadLine();
