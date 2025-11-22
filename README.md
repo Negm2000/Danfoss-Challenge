@@ -8,7 +8,7 @@ to minimize memory usage, storing the whole log file in memory is not an option,
 3. Multi-line entries and noise: the program handles multi-line entries by appending every line after an entry until it 
    reaches the next timestamp (or end of file), to avoid including noise, it uses a noise filter regex which tells the 
    program which lines to avoid.
-4. JSON Serialization: by bundling all the log contents in one structured record with field names matching the one in the JSON.
+4. JSON Serialization: by bundling all the entry data (timestamps, log levels, and messages) in one structured record with field names matching the one in the JSON.
                        we can easily serialize the entry using `JsonSerializer`.
 
 ## Assumptions and Decisions
@@ -37,5 +37,6 @@ to minimize memory usage, storing the whole log file in memory is not an option,
    - For the sake of standardization, they will all be serialized in the same way, as `null`.
         - This behavior can easily be changed later using the `??` operator to assign default values.
         - This allows a program reading the JSON to do null checking and handle missing information in a consistent manner between all parameters.
+
 
 
