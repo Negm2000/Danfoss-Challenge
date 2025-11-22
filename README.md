@@ -1,7 +1,7 @@
 ## Approach
 1. File parsing: `StreamReader` was used to read the file line by line, only storing the current and next line. 
-this program could potentially be used for files that are many gigabytes in size, as such an intentional effort was made 
-to minimize memory usage, we only store what we need, hence the decision to use StreamReader.
+The idea being this program could potentially be used for files that are many gigabytes in size, as such an intentional effort was made 
+to minimize memory usage, storing the whole log file in memory is not an option, we only store what we need, hence the decision to use StreamReader.
 2. Entry parsing: we know we need to parse a line if it has a timestamp, and is therefore a new entry, to parse the entry
    Regex is used throughout the program to robustly extract timestamps, log levels, and messages from each entry across 
    different patterns and formats.
@@ -37,3 +37,4 @@ to minimize memory usage, we only store what we need, hence the decision to use 
    - For the sake of standardization, they will all be serialized in the same way, as `null`.
         - This behavior can easily be changed later using the `??` operator to assign default values.
         - This allows a program reading the JSON to do null checking and handle missing information in a consistent manner between all parameters.
+
