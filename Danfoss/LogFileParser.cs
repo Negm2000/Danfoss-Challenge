@@ -21,7 +21,7 @@ public static class LogFileParser
                 // Initialize entry to be serialized
                 LogEntry entry = new LogEntry
                 {
-                    timestamp = timestamp,
+                    timestamp = LogParser.GetTimestamp(line, strict:true),
                     logLevel = LogParser.GetLogLevel(line),
                     message = LogParser.GetMessage(line)
                 };
