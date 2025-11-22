@@ -4,7 +4,7 @@ namespace Danfoss;
 /// Represents a structured singular log entry parsed from the raw log file.
 /// </summary>
 /// <remarks>
-/// By bundling all the log conents in one structured record with field names matching the one in the JSON.
+/// By bundling all the log contents in one structured record with field names matching the one in the JSON.
 /// We can now easily serialize the entry using JsonSerializer.
 /// </remarks>
 public record LogEntry
