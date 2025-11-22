@@ -10,12 +10,13 @@ In chronological order I started by doing the following, taking notes during the
       that should have been ignored.
     - If we assume only `CRITICAL` and `ERROR` could be multi-line then we will avoid any noise in this specific file,
       but this will fail if an `ERROR` is followed by noise.
-    - Safest option is to only select for specific types of error messages.
+    - Safest option is to only select for specific types of error messages. (difficult)
+    - Or filter out the noise explicitly. (easy)
 2. I know **Regex** is the right tool for this, so I researched how to use regex in C# and found a cheat sheet for all 
       the regex commands which I kept as a reference.
 
 # Assumptions
-1. Log entries with no timestamps can be ignored.
+1. Log entries must have a timestamp.
 2. Multi-line messages only end when a new timestamp begins.
-3. Messages with multiple lines only occur in CRITICAL or ERROR entries.
-4. Any missing logLevel or message will be serialized as null.
+3. Any missing logLevel or message will be serialized as null.
+4. All noise patterns are known and no real messages will share the same patterns.
